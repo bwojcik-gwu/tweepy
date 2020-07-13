@@ -1,0 +1,30 @@
+#Import the necessary methods from tweepy library
+from tweepy.streaming import StreamListener
+from tweepy import OAuthHandler
+from tweepy import Stream
+
+# Enter Twitter API Keys
+access_token = "1268944844405248001-I08mFy4wOxvilCtxTvfT0tF7YkNZMU"
+access_token_secret = "HuJ5uV1hF6jGvkkaL80CdpEpMMi03Z5nIRCWZ7bfvzdIL"
+consumer_key = "nyNw9kZ3g7Gd8aI6CEarhpp1O"
+consumer_secret = "eM1aNmqBKHeFzniSSusBgwvs3g2a0J4yPchsmck0gfQi8UQNJm"
+
+# Create the class that will handle the tweet stream
+class StdOutListener(StreamListener):
+      
+    def on_data(self, data):   
+        print(data)
+        return True
+        
+
+    def on_error(self, status):
+        print(status)
+
+
+if __name__ == '__main__':  
+# Handle Twitter authetification and the connection to Twitter Streaming API
+    l = StdOutListener()
+    auth = OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    stream = Stream(auth, l)
+    stream.filter(track=["#funeral","#mourning","#COVID","#coronavirus","online"])
